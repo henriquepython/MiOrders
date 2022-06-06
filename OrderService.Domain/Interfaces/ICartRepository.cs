@@ -9,19 +9,19 @@ namespace OrderService.Domain.Interfaces
 {
     public interface ICartRepository
     {
-        Cart Create(Cart cart);
+        void Create(Cart cart);
 
-        Cart Update(Cart cart);
+        void Update(Cart cart);
 
-        List<Cart> GetAll();
+        ICollection<Cart> GetAll();
 
-        Cart GetById(String id);
+        Cart GetById(Guid id);
 
-        List<Cart> GetByUser(String userId);
+        List<Cart> GetByUser(Guid userId);
 
-        List<Cart> GetByProduct(String productId);
+        void Commit();
 
-        void DeleteOne(String id);
+        void DeleteOne(Product product);
 
         void DeleteMany();
     }

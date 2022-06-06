@@ -594,6 +594,16 @@
             "rid": "win"
           }
         }
+      },
+      "OrderService.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/OrderService.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/OrderService.Domain.dll": {}
+        }
       }
     }
   },
@@ -1758,12 +1768,18 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "OrderService.Domain/1.0.0": {
+      "type": "project",
+      "path": "../OrderService.Domain/OrderService.Domain.csproj",
+      "msbuildProject": "../OrderService.Domain/OrderService.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Microsoft.EntityFrameworkCore >= 6.0.5",
-      "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.5"
+      "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.5",
+      "OrderService.Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1772,11 +1788,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joao.cerqueira\\source\\repos\\MiOrders\\OrderService.Infra.Data\\OrderService.Infra.Data.csproj",
+      "projectUniqueName": "C:\\Users\\joao.cerqueira\\source\\repos\\MIOrders\\OrderService.Infra.Data\\OrderService.Infra.Data.csproj",
       "projectName": "OrderService.Infra.Data",
-      "projectPath": "C:\\Users\\joao.cerqueira\\source\\repos\\MiOrders\\OrderService.Infra.Data\\OrderService.Infra.Data.csproj",
+      "projectPath": "C:\\Users\\joao.cerqueira\\source\\repos\\MIOrders\\OrderService.Infra.Data\\OrderService.Infra.Data.csproj",
       "packagesPath": "C:\\Users\\joao.cerqueira\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joao.cerqueira\\source\\repos\\MiOrders\\OrderService.Infra.Data\\obj\\",
+      "outputPath": "C:\\Users\\joao.cerqueira\\source\\repos\\MIOrders\\OrderService.Infra.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\joao.cerqueira\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1792,7 +1808,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\joao.cerqueira\\source\\repos\\MIOrders\\OrderService.Domain\\OrderService.Domain.csproj": {
+              "projectPath": "C:\\Users\\joao.cerqueira\\source\\repos\\MIOrders\\OrderService.Domain\\OrderService.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -13,8 +13,12 @@ namespace OrderService.Domain.Interfaces
 
         void Update(Product product);
 
-        Product GetByid(String id);
+        Product GetByid(Guid id);
+
+        ICollection<Product> GetAll();
 
         void Delete(Product product);
+
+        void Commit();
     }
 }

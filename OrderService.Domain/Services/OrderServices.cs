@@ -8,11 +8,11 @@ using OrderService.Domain.Models;
 
 namespace OrderService.Domain.Services
 {
-    public class OrderService : IOrderService
+    public class OrderServices : IOrderService
     {
         private readonly IOrderRepository orderRepository;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderServices(IOrderRepository orderRepository)
         {
             this.orderRepository = orderRepository;
         }
