@@ -13,9 +13,9 @@ namespace OrderService.Domain.Interfaces
 
         void Update(Order order);
 
-        Order GetById(Guid id);
+        Order GetById(String id);
 
-        ICollection<Order> GetAll();
+        IList<Order> GetAll();
 
         void Delete(Order order);
 

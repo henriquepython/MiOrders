@@ -1,0 +1,17 @@
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\OrderService.Infra.Data.csproj.AssemblyReference.cache
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\OrderService.Infra.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\OrderService.Infra.Data.AssemblyInfoInputs.cache
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\OrderService.Infra.Data.AssemblyInfo.cs
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\OrderService.Infra.Data.csproj.CoreCompileInputs.cache
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\bin\Debug\net6.0\OrderService.Infra.Data.deps.json
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\bin\Debug\net6.0\OrderService.Infra.Data.runtimeconfig.json
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\bin\Debug\net6.0\OrderService.Infra.Data.dll
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\bin\Debug\net6.0\OrderService.Infra.Data.pdb
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\bin\Debug\net6.0\OrderService.Domain.dll
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\bin\Debug\net6.0\OrderService.Domain.pdb
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\OrderService.Infra.Data.csproj.CopyComplete
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\OrderService.Infra.Data.dll
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\refint\OrderService.Infra.Data.dll
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\OrderService.Infra.Data.pdb
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\OrderService.Infra.Data.genruntimeconfig.cache
+C:\Users\joao.cerqueira\source\repos\MIOrders\OrderService.Infra.Data\obj\Debug\net6.0\ref\OrderService.Infra.Data.dll

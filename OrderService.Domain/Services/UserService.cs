@@ -16,6 +16,7 @@ namespace OrderService.Domain.Services
         {
             this.userRepository = userRepository;
         }
+
         public User CreateUser(User user)
         {
             throw new NotImplementedException();

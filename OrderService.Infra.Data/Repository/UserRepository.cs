@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OrderService.Domain.Interfaces;
 using OrderService.Domain.Models;
 using OrderService.Infra.Data.Context;
@@ -25,7 +26,7 @@ namespace OrderService.Infra.Data.Repository
 
         public void Create(User user)
         {
-           orderServiceContext.Users.Add(user);
+            orderServiceContext.Users.Add(user);
         }
 
         public void Delete(User user)
@@ -33,19 +34,19 @@ namespace OrderService.Infra.Data.Repository
             orderServiceContext.Users.Remove(user);
         }
 
-        public ICollection<User> GetAll()
+        public IList<User> GetAll()
         {
-            return orderServiceContext.Users.ToList();
+            return orderServiceContext.Users.AsNoTracking().ToList();
         }
 
-        public User GetById(Guid id)
+        public User GetById(String id)
         {
-            return orderServiceContext.Users.FirstOrDefault(x => x.id.Equals(id));
+            return orderServiceContext.Users.AsNoTracking().FirstOrDefault(x => x.id.Equals(id));
         }
 
         public void Update(User user)
         {
-           
+            orderServiceContext.Users.Update(user);
         }
     }
 }

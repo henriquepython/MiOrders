@@ -13,15 +13,15 @@ namespace OrderService.Domain.Interfaces
 
         void Update(Cart cart);
 
-        ICollection<Cart> GetAll();
+        IList<Cart> GetAll();
 
-        Cart GetById(Guid id);
+        Cart GetById(String id);
 
-        List<Cart> GetByUser(Guid userId);
+        IList<Cart> GetByUser(String userId);
 
         void Commit();
 
-        void DeleteOne(Product product);
+        void DeleteOne(Cart cart);
 
         void DeleteMany();
     }

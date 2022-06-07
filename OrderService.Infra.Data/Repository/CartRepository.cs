@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OrderService.Domain.Interfaces;
 using OrderService.Domain.Models;
 using OrderService.Infra.Data.Context;
@@ -33,29 +34,29 @@ namespace OrderService.Infra.Data.Repository
             orderServiceContext.Carts.RemoveRange(orderServiceContext.Carts);
         }
 
-        public void DeleteOne(Product product)
+        public void DeleteOne(Cart cart)
         {
-            orderServiceContext.Remove(product);
+            orderServiceContext.Carts.Remove(cart);
         }
 
-        public ICollection<Cart> GetAll()
+        public IList<Cart> GetAll()
         {
-            return orderServiceContext.Carts.ToList();
+            return orderServiceContext.Carts.AsNoTracking().ToList();
         }
 
-        public Cart GetById(Guid id)
+        public Cart GetById(String id)
         {
-            return orderServiceContext.Carts.FirstOrDefault(x => x.id.Equals(id));
+            return orderServiceContext.Carts.AsNoTracking().Where(x => x.id.Equals(id)).FirstOrDefault();
         }
 
-        public List<Cart> GetByUser(Guid userId)
+        public IList<Cart> GetByUser(String userId)
         {
-            return orderServiceContext.Carts.Where(b => b.userId.Equals(userId)).ToList();
+            return orderServiceContext.Carts.AsNoTracking().Where(x => x.userId.Equals(userId)).ToList();
         }
 
-        public Cart Update(Cart cart)
+        public void Update(Cart cart)
         {
-            throw new NotImplementedException();
+            orderServiceContext.Carts.Update(cart);
         }
     }
 }

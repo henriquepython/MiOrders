@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OrderService.Domain.Interfaces;
 using OrderService.Domain.Models;
 using OrderService.Infra.Data.Context;
@@ -33,19 +34,19 @@ namespace OrderService.Infra.Data.Repository
             orderServiceContext.Orders.Remove(order);
         }
 
-        public ICollection<Order> GetAll()
+        public IList<Order> GetAll()
         {
-            return orderServiceContext.Orders.ToList();
+            return orderServiceContext.Orders.AsNoTracking().ToList();
         }
 
-        public Order GetById(Guid id)
+        public Order GetById(String id)
         {
-            return orderServiceContext.Orders.FirstOrDefault(x => x.id.Equals(id));
+            return orderServiceContext.Orders.AsNoTracking().Where(x => x.id.Equals(id)).FirstOrDefault();
         }
 
         public void Update(Order order)
         {
-            
+            orderServiceContext.Orders.Update(order);
         }
     }
 }
