@@ -9,16 +9,20 @@ namespace OrderService.Domain.Interfaces
 {
     public interface IProductRepository
     {
-        void Create(Product product);
+        Task<Product> Create(Product product);
 
-        void Update(Product product);
+        Task Update(Product product);
 
-        Product GetByid(String id);
+        Task<Product> GetProductById(Guid productId);
 
-        IList<Product> GetAll();
+        Task<ICollection<Product>> GetProductByCategory(String productCategory);
 
-        void Delete(Product product);
+        Task<ICollection<Product>> GetProductByTitle(String productTitle);
 
-        void Commit();
+        Task<ICollection<Product>> GetAll();
+
+        Task Delete(Product product);
+
+        Task Commit();
     }
 }

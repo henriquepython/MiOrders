@@ -19,34 +19,48 @@ namespace OrderService.Infra.Data.Repository
             this.orderServiceContext = orderServiceContext;
         }
 
-        public void Commit()
+        public async Task Commit()
         {
-            orderServiceContext.SaveChanges();
+            await orderServiceContext.SaveChangesAsync();
         }
 
-        public void Create(Product product)
+        public async Task<Product> Create(Product product)
         {
             orderServiceContext.Products.Add(product);
+            await orderServiceContext.SaveChangesAsync();
+            return product;
         }
 
-        public void Delete(Product product)
+        public async Task Delete(Product product)
         {
             orderServiceContext.Products.Remove(product);
+            await orderServiceContext.SaveChangesAsync();
         }
 
-        public IList<Product> GetAll()
+        public async Task<ICollection<Product>> GetAll()
         {
-            return orderServiceContext.Products.AsNoTracking().ToList();
+            return await orderServiceContext.Products.AsNoTracking().ToListAsync();
         }
 
-        public Product GetByid(String id)
+        public async Task<Product> GetProductById(Guid productId)
         {
-            return orderServiceContext.Products.AsNoTracking().Where(x => x.id.Equals(id)).FirstOrDefault();
+            return await orderServiceContext.Products.AsNoTracking().Where(product => product.id.Equals(productId)).FirstOrDefaultAsync();
         }
 
-        public void Update(Product product)
+        public async Task<ICollection<Product>> GetProductByCategory(string productCategory)
+        {
+            return await orderServiceContext.Products.AsNoTracking().Where(product => product.category.Equals(productCategory)).ToListAsync();
+        }
+
+        public async Task<ICollection<Product>> GetProductByTitle(string title)
+        {
+            return await orderServiceContext.Products.AsNoTracking().Where(product => product.title.Equals(title)).ToListAsync();
+        }
+
+        public async Task Update(Product product)
         {
             orderServiceContext.Products.Update(product);
+            await orderServiceContext.SaveChangesAsync();
         }
     }
 }

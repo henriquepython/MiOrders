@@ -17,19 +17,22 @@ namespace OrderService.Domain.Services
             this.userRepository = userRepository;
         }
 
-        public User CreateUser(User user)
+        public async Task<User> CreateUser(User user)
         {
-            throw new NotImplementedException();
+            user.id = Guid.NewGuid();
+            user.created = DateTime.Now;
+
+            return await userRepository.Create(user);
         }
 
-        public List<User> GetAllUsers()
+        public async Task<ICollection<User>> GetAllUsers()
         {
-            throw new NotImplementedException();
+            return await userRepository.GetAll();
         }
 
-        public User GetUserByEmail(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
-            throw new NotImplementedException();
+            return await userRepository.GetUserByEmail(email);
         }
     }
 }

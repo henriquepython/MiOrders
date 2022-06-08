@@ -19,34 +19,38 @@ namespace OrderService.Infra.Data.Repository
             this.orderServiceContext = orderServiceContext;
         }
 
-        public void Commit()
+        public async Task Commit()
         {
-            orderServiceContext.SaveChanges();
+            await orderServiceContext.SaveChangesAsync();
         }
 
-        public void Create(User user)
+        public async Task<User> Create(User user)
         {
             orderServiceContext.Users.Add(user);
+            await orderServiceContext.SaveChangesAsync();
+            return user;
         }
 
-        public void Delete(User user)
+        public async Task Delete(User user)
         {
             orderServiceContext.Users.Remove(user);
+            await orderServiceContext.SaveChangesAsync();
         }
 
-        public IList<User> GetAll()
+        public async Task<ICollection<User>> GetAll()
         {
-            return orderServiceContext.Users.AsNoTracking().ToList();
+            return await orderServiceContext.Users.AsNoTracking().ToListAsync();
         }
 
-        public User GetById(String id)
+        public async Task<User> GetUserByEmail(string email)
         {
-            return orderServiceContext.Users.AsNoTracking().FirstOrDefault(x => x.id.Equals(id));
+            return await orderServiceContext.Users.Where(user => user.email.Equals(email)).FirstOrDefaultAsync();
         }
 
-        public void Update(User user)
+        public async Task Update(User user)
         {
             orderServiceContext.Users.Update(user);
+            await orderServiceContext.SaveChangesAsync();
         }
     }
 }

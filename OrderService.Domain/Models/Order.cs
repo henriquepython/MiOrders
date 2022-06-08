@@ -18,7 +18,7 @@ namespace OrderService.Domain.Models
 
         public decimal totalPrice { get; set; }
 
-        public DateTime? createdDate { get; set; }
+        public DateTime createdDate { get; set; }
 
         public DateTime UpdatedDate { get; set; }
 

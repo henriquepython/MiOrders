@@ -16,39 +16,45 @@ namespace OrderService.Domain.Services
         {
             this.productRepository = productRepository;
         }
-        public Product CreateProduct(Product product)
+
+        public async Task<Product> CreateProduct(Product product)
         {
-            throw new NotImplementedException();
+            product.id = Guid.NewGuid();
+            product.created = DateTime.Now;
+            return await productRepository.Create(product);
         }
 
-        public void DeleteProduct(int id)
+        public async Task DeleteProduct(Guid productId)
         {
-            throw new NotImplementedException();
+            var result = await productRepository.GetProductById(productId);
+            await productRepository.Delete(result);
         }
 
-        public List<Product> GetAllProducts()
+        public async Task<ICollection<Product>> GetAllProducts()
         {
-            throw new NotImplementedException();
+            return await productRepository.GetAll();
         }
 
-        public Product GetProductByCategory(string category)
+        public async Task<ICollection<Product>> GetProductByCategory(string productCategory)
         {
-            throw new NotImplementedException();
+            return await productRepository.GetProductByCategory(productCategory);
         }
 
-        public Product GetProductById(int id)
+        public async Task<ICollection<Product>> GetProductByTitle(string productTitle)
         {
-            throw new NotImplementedException();
+            return await productRepository.GetProductByCategory(productTitle);
         }
 
-        public Product GetProductByName(string name)
+        public async Task<Product> GetProductById(Guid productId)
         {
-            throw new NotImplementedException();
+            return await productRepository.GetProductById(productId);
         }
 
-        public Product UpdateProduct(Product product)
+        public async Task<Product> UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            product.created = DateTime.Now;
+            await productRepository.Update(product);
+            return product;
         }
     }
 }
