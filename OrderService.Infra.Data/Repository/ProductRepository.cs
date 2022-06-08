@@ -47,7 +47,7 @@ namespace OrderService.Infra.Data.Repository
             return await orderServiceContext.Products.AsNoTracking().Where(product => product.id.Equals(productId)).FirstOrDefaultAsync();
         }
 
-        public async Task<ICollection<Product>> GetProductByCategory(string productCategory)
+        public async Task<ICollection<Product>> GetProductByCategory(ProductCategory productCategory)
         {
             return await orderServiceContext.Products.AsNoTracking().Where(product => product.category.Equals(productCategory)).ToListAsync();
         }

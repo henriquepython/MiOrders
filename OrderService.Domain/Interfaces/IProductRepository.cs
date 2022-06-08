@@ -15,7 +15,7 @@ namespace OrderService.Domain.Interfaces
 
         Task<Product> GetProductById(Guid productId);
 
-        Task<ICollection<Product>> GetProductByCategory(String productCategory);
+        Task<ICollection<Product>> GetProductByCategory(ProductCategory productCategory);
 
         Task<ICollection<Product>> GetProductByTitle(String productTitle);
 

@@ -33,7 +33,7 @@ namespace OrderService.Service.API.Controllers
 
         // GET BY CATEGORY
         [HttpGet("/category/{category}")]
-        public async Task<ActionResult<Product>> GetByCategory(string category)
+        public async Task<ActionResult<Product>> GetByCategory(ProductCategory category)
         {
             return Ok(await productService.GetProductByCategory(category));
         }

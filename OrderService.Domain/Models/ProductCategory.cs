@@ -2,8 +2,8 @@
 {
     public enum ProductCategory
     {
-        Eletronics,
-        Clothes,
-        Sports
+        Eletronics = 0,
+        Clothes = 1,
+        Sports = 2
     }
 }

@@ -35,14 +35,14 @@ namespace OrderService.Domain.Services
             return await productRepository.GetAll();
         }
 
-        public async Task<ICollection<Product>> GetProductByCategory(string productCategory)
+        public async Task<ICollection<Product>> GetProductByCategory(ProductCategory productCategory)
         {
             return await productRepository.GetProductByCategory(productCategory);
         }
 
         public async Task<ICollection<Product>> GetProductByTitle(string productTitle)
         {
-            return await productRepository.GetProductByCategory(productTitle);
+            return await productRepository.GetProductByTitle(productTitle);
         }
 
         public async Task<Product> GetProductById(Guid productId)
