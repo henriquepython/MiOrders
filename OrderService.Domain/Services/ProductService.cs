@@ -21,6 +21,7 @@ namespace OrderService.Domain.Services
         {
             product.id = Guid.NewGuid();
             product.created = DateTime.Now;
+            product.updated = DateTime.Now;
             return await productRepository.Create(product);
         }
 
@@ -52,7 +53,7 @@ namespace OrderService.Domain.Services
 
         public async Task<Product> UpdateProduct(Product product)
         {
-            product.created = DateTime.Now;
+            product.updated = DateTime.Now;
             await productRepository.Update(product);
             return product;
         }

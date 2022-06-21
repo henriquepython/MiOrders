@@ -9,16 +9,20 @@ namespace OrderService.Domain.Interfaces
 {
     public interface IOrderRepository
     {
-        void Create(Order order);
+        Task Create(Order order);
 
-        void Update(Order order);
+        Task Update(Order order);
 
-        Order GetById(String id);
+        Task<ICollection<Order>> FindOrderByUser(Guid userId);
 
-        IList<Order> GetAll();
+        Task<Order> GetById(Guid id);
 
-        void Delete(Order order);
+        Task<IList<Cart>> GetCartByUser(Guid userId);
 
-        void Commit();
+        Task<ICollection<Order>> GetAll();
+
+        Task Delete(Order order);
+
+        Task Commit();
     }
 }

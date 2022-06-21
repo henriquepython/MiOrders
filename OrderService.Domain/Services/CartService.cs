@@ -16,24 +16,25 @@ namespace OrderService.Domain.Services
         {
             this.cartRepository = cartRepository;
         }
-        public Cart AddCart(Cart cart)
+
+        public async Task<Cart> addItemCart(Cart cart)
         {
-            throw new NotImplementedException();
+            return await cartRepository.create(cart);
         }
 
-        public Cart findCartByUser(string userId)
+        public async Task<ICollection<Cart>> findCartByUser(Guid userId)
         {
-            throw new NotImplementedException();
+            return await cartRepository.getByUser(userId);
         }
 
-        public string RemoveAllCart(string userId)
+        public async Task removeAllCart(Guid userId)
         {
-            throw new NotImplementedException();
+            await cartRepository.deleteMany(userId);
         }
 
-        public string RemoveCart(string id)
+        public async Task removeItemCart(Cart cart)
         {
-            throw new NotImplementedException();
+            await cartRepository.deleteOne(cart);
         }
     }
 }

@@ -21,6 +21,16 @@ namespace OrderService.Domain.Services
         {
             user.id = Guid.NewGuid();
             user.created = DateTime.Now;
+            user.roles = UserRoles.USER;
+
+            return await userRepository.Create(user);
+        }
+
+        public async Task<User> AdminCreateUser(User user)
+        {
+            user.id = Guid.NewGuid();
+            user.created = DateTime.Now;
+            user.roles = UserRoles.ADMIN;
 
             return await userRepository.Create(user);
         }

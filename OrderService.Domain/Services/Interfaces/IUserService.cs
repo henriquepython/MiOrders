@@ -11,6 +11,8 @@ namespace OrderService.Domain.Interfaces
     { 
         Task<User> CreateUser(User user);
 
+        Task<User> AdminCreateUser(User user);
+
         Task<ICollection<User>> GetAllUsers();
 
         Task<User> GetUserByEmail(string email);

@@ -9,11 +9,11 @@ namespace OrderService.Domain.Models
     public class Product
     {
         public Guid id { get; set; }
-        public string title { get; set; }
+        public string? title { get; set; }
 
-        public string image { get; set; }
+        public string? image { get; set; }
 
-        public string description { get; set; }
+        public string? description { get; set; }
 
         public ProductCategory category { get; set; }
 
@@ -22,5 +22,9 @@ namespace OrderService.Domain.Models
         public decimal price { get; set; }
 
         public DateTime created { get; set; }
+
+        public DateTime? updated { get; set; }
+
+
     }
 }

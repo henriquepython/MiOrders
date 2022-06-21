@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using OrderService.Domain.Interfaces;
 using OrderService.Domain.Models;
+using OrderService.Service.API.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,10 +13,12 @@ namespace OrderService.Service.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
+        private readonly IMapper mapper;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IMapper mapper)
         {
             this.userService = userService;
+            this.mapper = mapper;
         }
 
         //GET ALL
@@ -36,9 +40,15 @@ namespace OrderService.Service.API.Controllers
         //POST
 
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        public async Task<ActionResult<CreateUserViewModel>> Post([FromBody] CreateUserViewModel user)
         {
-            return Ok(userService.CreateUser(user));
+            return Ok(await userService.CreateUser(mapper.Map<User>(user)));
+        }
+
+        [HttpPost("/Admin")]
+        public async Task<ActionResult<CreateUserViewModel>> AdminPost([FromBody] CreateUserViewModel user)
+        {
+            return Ok(await userService.AdminCreateUser(mapper.Map<User>(user)));
         }
 
     }

@@ -39,12 +39,12 @@ namespace OrderService.Infra.Data.Repository
 
         public async Task<ICollection<User>> GetAll()
         {
-            return await orderServiceContext.Users.AsNoTracking().ToListAsync();
+            return await orderServiceContext.Users.Include(prop => prop.carts).AsNoTracking().ToListAsync();
         }
 
         public async Task<User> GetUserByEmail(string email)
         {
-            return await orderServiceContext.Users.Where(user => user.email.Equals(email)).FirstOrDefaultAsync();
+            return await orderServiceContext.Users.AsNoTracking().Where(user => user.email.Equals(email)).FirstOrDefaultAsync();
         }
 
         public async Task Update(User user)

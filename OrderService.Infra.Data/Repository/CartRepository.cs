@@ -19,44 +19,50 @@ namespace OrderService.Infra.Data.Repository
             this.orderServiceContext = orderServiceContext;
         }
 
-        public void Commit()
+        public async Task commit()
         {
-            orderServiceContext.SaveChanges();
+            await orderServiceContext.SaveChangesAsync();
         }
 
-        public void Create(Cart cart)
+        public async Task<Cart> create(Cart cart)
         {
             orderServiceContext.Carts.Add(cart);
+            await orderServiceContext.SaveChangesAsync();
+            return cart;
         }
 
-        public void DeleteMany()
+        public async Task deleteMany(Guid userId)
         {
-            orderServiceContext.Carts.RemoveRange(orderServiceContext.Carts);
+            var cartById = orderServiceContext.Carts.Where(cart => cart.userId.Equals(userId)).ToList();
+            orderServiceContext.Carts.RemoveRange(cartById);
+            await orderServiceContext.SaveChangesAsync(); 
         }
 
-        public void DeleteOne(Cart cart)
+        public async Task deleteOne(Cart cart)
         {
             orderServiceContext.Carts.Remove(cart);
+            await orderServiceContext.SaveChangesAsync(); 
         }
 
-        public IList<Cart> GetAll()
+        public async Task<ICollection<Cart>> getAll()
         {
-            return orderServiceContext.Carts.AsNoTracking().ToList();
+            return await orderServiceContext.Carts.AsNoTracking().ToListAsync();
         }
 
-        public Cart GetById(String id)
+        public async Task<Cart> getById(Guid id)
         {
-            return orderServiceContext.Carts.AsNoTracking().Where(x => x.id.Equals(id)).FirstOrDefault();
+            return await orderServiceContext.Carts.AsNoTracking().Where(cart => cart.id.Equals(id)).FirstOrDefaultAsync();
         }
 
-        public IList<Cart> GetByUser(String userId)
+        public async Task<ICollection<Cart>> getByUser(Guid userId)
         {
-            return orderServiceContext.Carts.AsNoTracking().Where(x => x.userId.Equals(userId)).ToList();
+            return await orderServiceContext.Carts.AsNoTracking().Where(cart => cart.userId.Equals(userId)).ToListAsync();
         }
 
-        public void Update(Cart cart)
+        public async Task update(Cart cart)
         {
             orderServiceContext.Carts.Update(cart);
+            await orderServiceContext.SaveChangesAsync();
         }
     }
 }

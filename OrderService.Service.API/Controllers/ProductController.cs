@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using OrderService.Domain.Interfaces;
 using OrderService.Domain.Models;
+using OrderService.Service.API.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,10 +13,12 @@ namespace OrderService.Service.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService productService;
+        private readonly IMapper mapper;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IMapper mapper)
         {
             this.productService = productService;
+            this.mapper = mapper;
         }
 
         // GETAll
@@ -47,9 +51,9 @@ namespace OrderService.Service.API.Controllers
 
         // POST
         [HttpPost]
-        public async Task<ActionResult<Product>> Post([FromBody] Product product)
+        public async Task<ActionResult<CreateProductViewModel>> Post([FromBody] CreateProductViewModel product)
         {
-            return Ok(await productService.CreateProduct(product));
+            return Ok(await productService.CreateProduct(mapper.Map<Product>(product)));
         }
 
         // PUT
@@ -57,11 +61,13 @@ namespace OrderService.Service.API.Controllers
         public async Task<IActionResult> Put(Guid id, [FromBody] Product product)
         {
             var result = await productService.GetProductById(id);
-            if (result != null)
+            
+            if (result == null)
             {
-                return Ok(await productService.UpdateProduct(product));
+                return BadRequest();
             }
-            return BadRequest();
+            
+            return Ok(await productService.UpdateProduct(product));
         }
 
         // DELETE

@@ -26,7 +26,8 @@ namespace OrderService.Infra.Data.Migrations
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
                     b.Property<string>("image")
                         .IsRequired()
@@ -35,9 +36,6 @@ namespace OrderService.Infra.Data.Migrations
                     b.Property<decimal>("price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("productIdid")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("quantity")
                         .HasColumnType("int");
 
@@ -45,14 +43,12 @@ namespace OrderService.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("userIdid")
+                    b.Property<Guid?>("userId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
 
-                    b.HasIndex("productIdid");
-
-                    b.HasIndex("userIdid");
+                    b.HasIndex("userId");
 
                     b.ToTable("Carts");
                 });
@@ -61,26 +57,25 @@ namespace OrderService.Infra.Data.Migrations
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("createdDate")
+                    b.Property<DateTime>("createdDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
 
                     b.Property<decimal>("totalPrice")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("userIdid")
+                    b.Property<Guid>("userId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
 
-                    b.HasIndex("userIdid");
+                    b.HasIndex("userId");
 
                     b.ToTable("Orders");
                 });
@@ -89,10 +84,8 @@ namespace OrderService.Infra.Data.Migrations
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("Orderid")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
                     b.Property<int>("category")
                         .HasColumnType("int");
@@ -109,6 +102,7 @@ namespace OrderService.Infra.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("price")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("quantity")
@@ -116,11 +110,14 @@ namespace OrderService.Infra.Data.Migrations
 
                     b.Property<string>("title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime?>("updated")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
 
                     b.HasKey("id");
-
-                    b.HasIndex("Orderid");
 
                     b.ToTable("Products");
                 });
@@ -129,21 +126,25 @@ namespace OrderService.Infra.Data.Migrations
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
                     b.Property<DateTime>("created")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<int>("phoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("phoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("roles")
                         .HasColumnType("int");
@@ -155,44 +156,25 @@ namespace OrderService.Infra.Data.Migrations
 
             modelBuilder.Entity("OrderService.Domain.Models.Cart", b =>
                 {
-                    b.HasOne("OrderService.Domain.Models.Product", "productId")
-                        .WithMany()
-                        .HasForeignKey("productIdid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OrderService.Domain.Models.User", "userId")
-                        .WithMany()
-                        .HasForeignKey("userIdid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("productId");
-
-                    b.Navigation("userId");
+                    b.HasOne("OrderService.Domain.Models.User", null)
+                        .WithMany("carts")
+                        .HasForeignKey("userId");
                 });
 
             modelBuilder.Entity("OrderService.Domain.Models.Order", b =>
                 {
-                    b.HasOne("OrderService.Domain.Models.User", "userId")
-                        .WithMany()
-                        .HasForeignKey("userIdid")
+                    b.HasOne("OrderService.Domain.Models.User", null)
+                        .WithMany("orders")
+                        .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("userId");
                 });
 
-            modelBuilder.Entity("OrderService.Domain.Models.Product", b =>
+            modelBuilder.Entity("OrderService.Domain.Models.User", b =>
                 {
-                    b.HasOne("OrderService.Domain.Models.Order", null)
-                        .WithMany("product")
-                        .HasForeignKey("Orderid");
-                });
+                    b.Navigation("carts");
 
-            modelBuilder.Entity("OrderService.Domain.Models.Order", b =>
-                {
-                    b.Navigation("product");
+                    b.Navigation("orders");
                 });
 #pragma warning restore 612, 618
         }

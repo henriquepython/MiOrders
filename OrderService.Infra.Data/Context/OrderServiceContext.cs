@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Domain.Models;
+using OrderService.Infra.Data.Mapper;
 
 namespace OrderService.Infra.Data.Context
 {
@@ -23,12 +24,15 @@ namespace OrderService.Infra.Data.Context
         }
 
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //  modelBuilder.ApplyConfiguration(new OrderMap());
-        //modelBuilder.ApplyConfiguration(new OrderItemMap());
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new OrderMap());
+            modelBuilder.ApplyConfiguration(new ProductMap());
+            modelBuilder.ApplyConfiguration(new CartMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
 
-        //base.OnModelCreating(modelBuilder);
-        //}
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

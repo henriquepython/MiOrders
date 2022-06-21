@@ -10,14 +10,17 @@ namespace OrderService.Domain.Models
     {
         public Guid id { get; set; }
 
-        public string name { get; set; }
+        public string? name { get; set; }
 
-        public string email { get; set; }
+        public string? email { get; set; }
 
-        public int phoneNumber { get; set; }
+        public string? phoneNumber { get; set; }
+
+        public IList<Cart>? carts { get; set; }
 
         public UserRoles roles { get; set; }
 
         public DateTime created { get; set; }
+
     }
 }

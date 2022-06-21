@@ -9,17 +9,17 @@ namespace OrderService.Domain.Interfaces
 {
     public interface IOrderService
     { 
-        Order CreateOrder(Order order);
+        Task <Order> CreateOrder(Order order);
 
-        List<Order> findAll();
+        Task<ICollection<Order>> findAll();
 
-        List<Order> FindOrderByUser(String userId);
+        Task<ICollection<Order>> FindOrderByUser(Guid userId);
 
-        void CancelOrder(String id);
+        Task CancelOrder(Guid id);
 
-        void RequestCancelOrder(String id);
+        Task RequestCancelOrder(Guid id);
 
-        void CompletedCancelOrder(String id);
+        Task CompletedOrder(Guid id);
 
     }
 }

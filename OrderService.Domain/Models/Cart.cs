@@ -10,16 +10,15 @@ namespace OrderService.Domain.Models
     {
         public Guid id { get; set; }
 
-        public User userId { get; set; }
-
-        public Product productId { get; set; }
+        public Guid? userId { get; set; }
 
         public int quantity { get; set; }
        
         public decimal price { get; set; }
 
-        public string title { get; set; }
+        public string? title { get; set; }
 
-        public string image { get; set; }
+        public string? image { get; set; }
+
     }
 }

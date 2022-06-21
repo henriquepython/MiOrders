@@ -19,34 +19,47 @@ namespace OrderService.Infra.Data.Repository
             this.orderServiceContext = orderServiceContext;
         }
 
-        public void Commit()
+        public async Task Commit()
         {
-            orderServiceContext.SaveChanges();
+            await orderServiceContext.SaveChangesAsync();
         }
 
-        public void Create(Order order)
+        public async Task Create(Order order)
         {
             orderServiceContext.Orders.Add(order);
+            await orderServiceContext.SaveChangesAsync();
         }
 
-        public void Delete(Order order)
+        public async Task Delete(Order order)
         {
             orderServiceContext.Orders.Remove(order);
+            await orderServiceContext.SaveChangesAsync();
         }
 
-        public IList<Order> GetAll()
+        public async Task<ICollection<Order>> GetAll()
         {
-            return orderServiceContext.Orders.AsNoTracking().ToList();
+            return await orderServiceContext.Orders.Include(prop => prop.user).AsNoTracking().ToListAsync();
         }
 
-        public Order GetById(String id)
+        public async Task<Order> GetById(Guid id)
         {
-            return orderServiceContext.Orders.AsNoTracking().Where(x => x.id.Equals(id)).FirstOrDefault();
+            return await orderServiceContext.Orders.AsNoTracking().Include(e => e.user).Where(x => x.id.Equals(id)).FirstOrDefaultAsync();
         }
 
-        public void Update(Order order)
+        public async Task<IList<Cart>> GetCartByUser(Guid userId)
+        {
+            return await orderServiceContext.Carts.Where(x => x.userId.Equals(userId)).ToListAsync();
+        }
+
+        public async Task Update(Order order)
         {
             orderServiceContext.Orders.Update(order);
+            await orderServiceContext.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<Order>> FindOrderByUser(Guid userId)
+        {
+            return await orderServiceContext.Orders.AsNoTracking().Where(orders => orders.userId.Equals(userId)).ToListAsync();
         }
     }
 }

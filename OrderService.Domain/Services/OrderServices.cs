@@ -11,39 +11,62 @@ namespace OrderService.Domain.Services
     public class OrderServices : IOrderService
     {
         private readonly IOrderRepository orderRepository;
+        private readonly ICartRepository cartRepository;
 
         public OrderServices(IOrderRepository orderRepository)
         {
             this.orderRepository = orderRepository;
+            this.cartRepository = cartRepository;
         }
-        public void CancelOrder(string id)
+        public async Task CancelOrder(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public void CompletedCancelOrder(string id)
-        {
-            throw new NotImplementedException();
+            Order order = await orderRepository.GetById(id);
+            order.status = OrderStatus.Cancel;
+            await orderRepository.Commit();
         }
 
-        public Order CreateOrder(Order order)
+        public async Task CompletedOrder(Guid id)
         {
-            throw new NotImplementedException();
+            Order order = await orderRepository.GetById(id);
+            order.status = OrderStatus.Completed;
+            await orderRepository.Commit();
         }
 
-        public List<Order> findAll()
+        public async Task<Order> CreateOrder(Order order)
         {
-            throw new NotImplementedException();
+            order.id = Guid.NewGuid();
+            order.createdDate = DateTime.Now;
+            order.status = OrderStatus.Pending;
+            order.totalPrice = 0;
+
+            var orderCart = await orderRepository.GetCartByUser(order.userId);
+
+            foreach (var orderItem in orderCart)
+            {
+                var total = orderItem.quantity * orderItem.price;
+                order.totalPrice += total;
+            }
+
+            await orderRepository.Create(order);
+            return order;
+
+        }
+        
+        public async Task<ICollection<Order>> findAll()
+        {
+            return await orderRepository.GetAll();
         }
 
-        public List<Order> FindOrderByUser(string userId)
+        public async Task<ICollection<Order>> FindOrderByUser(Guid userId)
         {
-            throw new NotImplementedException();
+            return await orderRepository.FindOrderByUser(userId);
         }
 
-        public void RequestCancelOrder(string id)
+        public async Task RequestCancelOrder(Guid id)
         {
-            throw new NotImplementedException();
+            Order order = await orderRepository.GetById(id);
+            order.status = OrderStatus.RequestCancelled;
+            await orderRepository.Commit();
         }
     }
 }

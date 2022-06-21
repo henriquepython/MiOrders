@@ -9,14 +9,12 @@ namespace OrderService.Domain.Interfaces
 {
     public interface ICartService
     { 
-       Cart AddCart(Cart cart);
+       Task<Cart> addItemCart(Cart cart);
 
-       Cart findCartByUser(String userId);
+       Task<ICollection<Cart>> findCartByUser(Guid userId);
 
+       Task removeItemCart(Cart cart);
 
-
-       String RemoveCart(String id);
-
-       String RemoveAllCart(String userId);
+       Task removeAllCart(Guid userId);
     }
 }
