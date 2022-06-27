@@ -24,27 +24,23 @@ namespace OrderService.Infra.Data.Repository
             await orderServiceContext.SaveChangesAsync();
         }
 
-        public async Task<Cart> create(Cart cart)
+        public void create(Cart cart)
         {
             orderServiceContext.Carts.Add(cart);
-            await orderServiceContext.SaveChangesAsync();
-            return cart;
         }
 
-        public async Task deleteMany(Guid userId)
+        public void deleteMany(Guid userId)
         {
             var cartById = orderServiceContext.Carts.Where(cart => cart.userId.Equals(userId)).ToList();
             orderServiceContext.Carts.RemoveRange(cartById);
-            await orderServiceContext.SaveChangesAsync(); 
         }
 
-        public async Task deleteOne(Cart cart)
+        public void deleteOne(Cart cart)
         {
-            orderServiceContext.Carts.Remove(cart);
-            await orderServiceContext.SaveChangesAsync(); 
+            orderServiceContext.Carts.Remove(cart); 
         }
 
-        public async Task<ICollection<Cart>> getAll()
+        public async Task<IEnumerable<Cart>> getAll()
         {
             return await orderServiceContext.Carts.AsNoTracking().ToListAsync();
         }
@@ -54,15 +50,14 @@ namespace OrderService.Infra.Data.Repository
             return await orderServiceContext.Carts.AsNoTracking().Where(cart => cart.id.Equals(id)).FirstOrDefaultAsync();
         }
 
-        public async Task<ICollection<Cart>> getByUser(Guid userId)
+        public async Task<IEnumerable<Cart>> getByUser(Guid userId)
         {
             return await orderServiceContext.Carts.AsNoTracking().Where(cart => cart.userId.Equals(userId)).ToListAsync();
         }
 
-        public async Task update(Cart cart)
+        public void update(Cart cart)
         {
             orderServiceContext.Carts.Update(cart);
-            await orderServiceContext.SaveChangesAsync();
         }
     }
 }

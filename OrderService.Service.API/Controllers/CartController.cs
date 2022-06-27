@@ -22,9 +22,16 @@ namespace OrderService.Service.API.Controllers
 
         // GET BY USER
         [HttpGet("{userId}")]
-        public async Task<ActionResult<ICollection<Cart>>> GetByUser(Guid userId)
+        public async Task<ActionResult<IEnumerable<Cart>>> GetByUser(Guid userId)
         {
-            return Ok(await cartService.findCartByUser(userId));
+            var cartId = await cartService.findCartByUser(userId);
+
+            if (cartId == null)
+            {
+                return NotFound("cart not found");
+            }
+
+            return Ok(cartId);
         }
         
         // POST
@@ -37,16 +44,18 @@ namespace OrderService.Service.API.Controllers
 
         // DELETE ONE
         [HttpDelete]
-        public async Task deleteOne(Cart cart)
+        public async Task<IActionResult> deleteOne(Cart cart)
         {
             await cartService.removeItemCart(cart);
+            return NoContent();
         }
 
         // DELETE ALL BY USER
         [HttpDelete("/user/{userId}")]
-        public async Task deleteByUser(Guid userId)
+        public async Task<IActionResult> deleteByUser(Guid userId)
         {
             await cartService.removeAllCart(userId);
+            return NoContent();
         }
     }
 }

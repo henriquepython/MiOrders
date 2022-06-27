@@ -21,39 +21,56 @@ namespace OrderService.Service.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ICollection<Order>>> Get()
+        public async Task<ActionResult<IEnumerable<CreateOrderViewModel>>> Get()
         {
             return Ok(await orderService.findAll());
         }
 
         [HttpGet("userId")]
-        public async Task<ActionResult<ICollection<Order>>> FindOrderByUser(Guid userId)
+        public async Task<ActionResult<ICollection<CreateOrderViewModel>>> FindOrderByUser(Guid userId)
         {
-            return Ok(await orderService.FindOrderByUser(userId));
+            var orderId = await orderService.FindOrderByUser(userId);
+
+            if (orderId is null)
+            {
+                return NotFound("order not found");
+            }
+
+            var orderMapper = mapper.Map<Order>(orderId);
+            return Ok(orderMapper);
         }
 
         [HttpPost]
         public async Task<ActionResult<CreateOrderViewModel>> Create(CreateOrderViewModel order)
         {
-            return Ok(await orderService.CreateOrder(mapper.Map<Order>(order)));
+            if (order is null)
+            {
+                return BadRequest();
+            }
+
+            var orderCreated = await orderService.CreateOrder(mapper.Map<Order>(order));
+            return Ok(orderCreated);
         }
 
         [HttpPost("/CompletedOrder")]
-        public async Task CompletedOrder(Guid id)
+        public async Task<IActionResult> CompletedOrder(Guid id)
         { 
             await orderService.CompletedOrder(id);
+            return NoContent();
         }
 
         [HttpPost("/CancelOrder")]
-        public async Task CancelOrder(Guid id)
+        public async Task<IActionResult> CancelOrder(Guid id)
         {
             await orderService.CancelOrder(id);
+            return NoContent();
         }
 
         [HttpPost("/RequestCancelOrder")]
-        public async Task RequestCancelOrder(Guid id)
+        public async Task<IActionResult> RequestCancelOrder(Guid id)
         {
             await orderService.RequestCancelOrder(id);
+            return NoContent();
         }
     }
 }

@@ -9,20 +9,20 @@ namespace OrderService.Domain.Interfaces
 {
     public interface ICartRepository
     {
-        Task<Cart> create(Cart cart);
+        void create(Cart cart);
 
-        Task update(Cart cart);
+        void update(Cart cart);
 
-        Task<ICollection<Cart>> getAll();
+        Task<IEnumerable<Cart>> getAll();
 
         Task<Cart> getById(Guid id);
 
-        Task<ICollection<Cart>> getByUser(Guid userId);
+        Task<IEnumerable<Cart>> getByUser(Guid userId);
 
         Task commit();
 
-        Task deleteOne(Cart cart);
+        void deleteOne(Cart cart);
 
-        Task deleteMany(Guid userId);
+        void deleteMany(Guid userId);
     }
 }

@@ -47,17 +47,19 @@ namespace OrderService.Domain.Services
                 order.totalPrice += total;
             }
 
-            await orderRepository.Create(order);
+            orderRepository.Create(order);
+            await orderRepository.Commit();
+
             return order;
 
         }
         
-        public async Task<ICollection<Order>> findAll()
+        public async Task<IEnumerable<Order>> findAll()
         {
             return await orderRepository.GetAll();
         }
 
-        public async Task<ICollection<Order>> FindOrderByUser(Guid userId)
+        public async Task<IEnumerable<Order>> FindOrderByUser(Guid userId)
         {
             return await orderRepository.FindOrderByUser(userId);
         }

@@ -19,22 +19,26 @@ namespace OrderService.Domain.Services
 
         public async Task<Cart> addItemCart(Cart cart)
         {
-            return await cartRepository.create(cart);
+            cartRepository.create(cart);
+            await cartRepository.commit();
+            return cart;
         }
 
-        public async Task<ICollection<Cart>> findCartByUser(Guid userId)
+        public async Task<IEnumerable<Cart>> findCartByUser(Guid userId)
         {
             return await cartRepository.getByUser(userId);
         }
 
         public async Task removeAllCart(Guid userId)
         {
-            await cartRepository.deleteMany(userId);
+            cartRepository.deleteMany(userId);
+            await cartRepository.commit();
         }
 
         public async Task removeItemCart(Cart cart)
         {
-            await cartRepository.deleteOne(cart);
+            cartRepository.deleteOne(cart);
+            await cartRepository.commit();
         }
     }
 }

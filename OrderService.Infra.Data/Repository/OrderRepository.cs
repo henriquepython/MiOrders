@@ -24,21 +24,19 @@ namespace OrderService.Infra.Data.Repository
             await orderServiceContext.SaveChangesAsync();
         }
 
-        public async Task Create(Order order)
+        public void Create(Order order)
         {
             orderServiceContext.Orders.Add(order);
-            await orderServiceContext.SaveChangesAsync();
         }
 
-        public async Task Delete(Order order)
+        public void Delete(Order order)
         {
             orderServiceContext.Orders.Remove(order);
-            await orderServiceContext.SaveChangesAsync();
         }
 
         public async Task<ICollection<Order>> GetAll()
         {
-            return await orderServiceContext.Orders.Include(prop => prop.user).AsNoTracking().ToListAsync();
+            return await orderServiceContext.Orders.AsNoTracking().Include(prop => prop.user).ToListAsync();
         }
 
         public async Task<Order> GetById(Guid id)
@@ -46,15 +44,14 @@ namespace OrderService.Infra.Data.Repository
             return await orderServiceContext.Orders.AsNoTracking().Include(e => e.user).Where(x => x.id.Equals(id)).FirstOrDefaultAsync();
         }
 
-        public async Task<IList<Cart>> GetCartByUser(Guid userId)
+        public async Task<IEnumerable<Cart>> GetCartByUser(Guid userId)
         {
-            return await orderServiceContext.Carts.Where(x => x.userId.Equals(userId)).ToListAsync();
+            return await orderServiceContext.Carts.AsNoTracking().Where(x => x.userId.Equals(userId)).ToListAsync();
         }
 
-        public async Task Update(Order order)
+        public void Update(Order order)
         {
-            orderServiceContext.Orders.Update(order);
-            await orderServiceContext.SaveChangesAsync();
+            orderServiceContext.Entry(order).State = EntityState.Modified;
         }
 
         public async Task<ICollection<Order>> FindOrderByUser(Guid userId)

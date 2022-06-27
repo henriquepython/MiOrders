@@ -11,7 +11,7 @@ namespace OrderService.Domain.Interfaces
     { 
        Task<Cart> addItemCart(Cart cart);
 
-       Task<ICollection<Cart>> findCartByUser(Guid userId);
+       Task<IEnumerable<Cart>> findCartByUser(Guid userId);
 
        Task removeItemCart(Cart cart);
 
