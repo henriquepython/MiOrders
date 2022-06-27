@@ -13,8 +13,8 @@ namespace OrderService.Domain.Interfaces
 
         Task<User> AdminCreateUser(User user);
 
-        Task<ICollection<User>> GetAllUsers();
+        Task<IEnumerable<User>> GetAllUsers();
 
-        Task<User> GetUserByEmail(string email);
+        Task<User> GetById(Guid id);
     }
 }

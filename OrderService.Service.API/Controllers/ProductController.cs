@@ -23,58 +23,82 @@ namespace OrderService.Service.API.Controllers
 
         // GETAll
         [HttpGet]
-        public async Task<ActionResult<ICollection<Product>>> Get()
+        public async Task<ActionResult<IEnumerable<Product>>> Get()
         {
             return Ok(await productService.GetAllProducts());
         }
 
         // GET BY ID
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetProduct")]
         public async Task<ActionResult<Product>> GetById(Guid id)
         {
-            return Ok(await productService.GetProductById(id));
+            var productId = await productService.GetProductById(id);
+            if (productId is null)
+            {
+                return NotFound("product not found");
+            }
+
+            return Ok(productId);
         }
 
         // GET BY CATEGORY
         [HttpGet("/category/{category}")]
-        public async Task<ActionResult<Product>> GetByCategory(ProductCategory category)
+        public async Task<ActionResult<IEnumerable<Product>>> GetByCategory(ProductCategory category)
         {
-            return Ok(await productService.GetProductByCategory(category));
+            var categoryProduct = await productService.GetProductByCategory(category);
+            
+            if (categoryProduct is null)
+            {
+                return NotFound("category not found");
+            }
+
+            return Ok(categoryProduct);
         }
 
         // GET BY TITLE
         [HttpGet("/title/{title}")]
-        public async Task<ActionResult<Product>> GetByTitle(string title)
+        public async Task<ActionResult<IEnumerable<Product>>> GetByTitle(string title)
         {
-            return Ok(await productService.GetProductByTitle(title));
+            var titleProduct = await productService.GetProductByTitle(title);
+
+            if (titleProduct is null)
+            {
+                return NotFound("title not found");
+            }
+
+            return Ok(titleProduct);
         }
 
         // POST
         [HttpPost]
         public async Task<ActionResult<CreateProductViewModel>> Post([FromBody] CreateProductViewModel product)
         {
-            return Ok(await productService.CreateProduct(mapper.Map<Product>(product)));
+            var selectProduct = mapper.Map<Product>(product);
+            var createdProduct = await productService.CreateProduct(selectProduct);
+            return new CreatedAtRouteResult("GetProduct", new { id = selectProduct.id}, createdProduct);
         }
 
         // PUT
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] Product product)
+        public async Task<ActionResult<CreateProductViewModel>> Put(Guid id, [FromBody] Product product)
         {
             var result = await productService.GetProductById(id);
             
-            if (result == null)
+            if (result is null)
             {
                 return BadRequest();
             }
             
-            return Ok(await productService.UpdateProduct(product));
+            await productService.UpdateProduct(product);
+            
+            return new CreatedAtRouteResult("GetProduct", new {id = product.id}, product) ;
         }
 
         // DELETE
         [HttpDelete("{id}")]
-        public async Task Delete(Guid id)
+        public async Task<Product> Delete(Guid id)
         {
-            await productService.DeleteProduct(id);
+           return await productService.DeleteProduct(id);
         }
     }
 }

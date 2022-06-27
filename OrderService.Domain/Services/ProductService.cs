@@ -22,26 +22,33 @@ namespace OrderService.Domain.Services
             product.id = Guid.NewGuid();
             product.created = DateTime.Now;
             product.updated = DateTime.Now;
-            return await productRepository.Create(product);
+            
+            productRepository.Create(product);
+            await productRepository.Commit();
+
+            return product;
         }
 
-        public async Task DeleteProduct(Guid productId)
+        public async Task<Product> DeleteProduct(Guid productId)
         {
             var result = await productRepository.GetProductById(productId);
-            await productRepository.Delete(result);
+            productRepository.Delete(result);
+            await productRepository.Commit();
+
+            return result;
         }
 
-        public async Task<ICollection<Product>> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetAllProducts()
         {
             return await productRepository.GetAll();
         }
 
-        public async Task<ICollection<Product>> GetProductByCategory(ProductCategory productCategory)
+        public async Task<IEnumerable<Product>> GetProductByCategory(ProductCategory productCategory)
         {
             return await productRepository.GetProductByCategory(productCategory);
         }
 
-        public async Task<ICollection<Product>> GetProductByTitle(string productTitle)
+        public async Task<IEnumerable<Product>> GetProductByTitle(string productTitle)
         {
             return await productRepository.GetProductByTitle(productTitle);
         }
@@ -51,11 +58,11 @@ namespace OrderService.Domain.Services
             return await productRepository.GetProductById(productId);
         }
 
-        public async Task<Product> UpdateProduct(Product product)
+        public async Task UpdateProduct(Product product)
         {
             product.updated = DateTime.Now;
-            await productRepository.Update(product);
-            return product;
+            productRepository.Update(product);
+            await productRepository.Commit();
         }
     }
 }

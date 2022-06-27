@@ -11,17 +11,17 @@ namespace OrderService.Domain.Interfaces
     { 
         Task<Product> CreateProduct(Product product);
 
-        Task<ICollection<Product>> GetAllProducts();
+        Task<IEnumerable<Product>> GetAllProducts();
 
         Task<Product> GetProductById(Guid productId);
 
-        Task<ICollection<Product>> GetProductByCategory(ProductCategory productCategory);
+        Task<IEnumerable<Product>> GetProductByCategory(ProductCategory productCategory);
 
-        Task<ICollection<Product>> GetProductByTitle(String productTitle);
+        Task<IEnumerable<Product>> GetProductByTitle(string productTitle);
 
-        Task<Product> UpdateProduct(Product product);
+        Task UpdateProduct(Product product);
 
-        Task DeleteProduct(Guid productId);
+        Task<Product> DeleteProduct(Guid productId);
 
 
     }

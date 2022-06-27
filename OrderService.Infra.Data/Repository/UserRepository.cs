@@ -24,33 +24,29 @@ namespace OrderService.Infra.Data.Repository
             await orderServiceContext.SaveChangesAsync();
         }
 
-        public async Task<User> Create(User user)
+        public void Create(User user)
         {
             orderServiceContext.Users.Add(user);
-            await orderServiceContext.SaveChangesAsync();
-            return user;
         }
 
-        public async Task Delete(User user)
+        public void Delete(User user)
         {
             orderServiceContext.Users.Remove(user);
-            await orderServiceContext.SaveChangesAsync();
         }
 
-        public async Task<ICollection<User>> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            return await orderServiceContext.Users.Include(prop => prop.carts).AsNoTracking().ToListAsync();
+            return await orderServiceContext.Users.AsNoTracking().Include(prop => prop.carts).ToListAsync();
         }
 
-        public async Task<User> GetUserByEmail(string email)
+        public async Task<User> GetById(Guid id)
         {
-            return await orderServiceContext.Users.AsNoTracking().Where(user => user.email.Equals(email)).FirstOrDefaultAsync();
+            return await orderServiceContext.Users.Where(user => user.id == id).Include(prop => prop.carts).FirstOrDefaultAsync();
         }
 
-        public async Task Update(User user)
+        public void Update(User user)
         {
-            orderServiceContext.Users.Update(user);
-            await orderServiceContext.SaveChangesAsync();
+            orderServiceContext.Entry(user).State = EntityState.Modified;
         }
     }
 }

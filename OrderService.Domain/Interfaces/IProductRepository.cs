@@ -9,19 +9,19 @@ namespace OrderService.Domain.Interfaces
 {
     public interface IProductRepository
     {
-        Task<Product> Create(Product product);
+        void Create(Product product);
 
-        Task Update(Product product);
+        void Update(Product product);
 
         Task<Product> GetProductById(Guid productId);
 
-        Task<ICollection<Product>> GetProductByCategory(ProductCategory productCategory);
+        Task<IEnumerable<Product>> GetProductByCategory(ProductCategory productCategory);
 
-        Task<ICollection<Product>> GetProductByTitle(String productTitle);
+        Task<IEnumerable<Product>> GetProductByTitle(string productTitle);
 
-        Task<ICollection<Product>> GetAll();
+        Task<IEnumerable<Product>> GetAll();
 
-        Task Delete(Product product);
+        void Delete(Product product);
 
         Task Commit();
     }

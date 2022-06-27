@@ -24,20 +24,17 @@ namespace OrderService.Infra.Data.Repository
             await orderServiceContext.SaveChangesAsync();
         }
 
-        public async Task<Product> Create(Product product)
+        public void Create(Product product)
         {
             orderServiceContext.Products.Add(product);
-            await orderServiceContext.SaveChangesAsync();
-            return product;
         }
 
-        public async Task Delete(Product product)
+        public void Delete(Product product)
         {
             orderServiceContext.Products.Remove(product);
-            await orderServiceContext.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Product>> GetAll()
+        public async Task<IEnumerable<Product>> GetAll()
         {
             return await orderServiceContext.Products.AsNoTracking().ToListAsync();
         }
@@ -47,20 +44,19 @@ namespace OrderService.Infra.Data.Repository
             return await orderServiceContext.Products.AsNoTracking().Where(product => product.id.Equals(productId)).FirstOrDefaultAsync();
         }
 
-        public async Task<ICollection<Product>> GetProductByCategory(ProductCategory productCategory)
+        public async Task<IEnumerable<Product>> GetProductByCategory(ProductCategory productCategory)
         {
-            return await orderServiceContext.Products.AsNoTracking().Where(product => product.category.Equals(productCategory)).ToListAsync();
+            return await orderServiceContext.Products.Where(product => product.category.Equals(productCategory)).ToListAsync();
         }
 
-        public async Task<ICollection<Product>> GetProductByTitle(string title)
+        public async Task<IEnumerable<Product>> GetProductByTitle(string title)
         {
-            return await orderServiceContext.Products.AsNoTracking().Where(product => product.title.Equals(title)).ToListAsync();
+            return await orderServiceContext.Products.Where(product => product.title.Equals(title)).ToListAsync();
         }
 
-        public async Task Update(Product product)
+        public void Update(Product product)
         {
-            orderServiceContext.Products.Update(product);
-            await orderServiceContext.SaveChangesAsync();
+            orderServiceContext.Entry(product).State = EntityState.Modified;
         }
     }
 }

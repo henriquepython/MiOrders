@@ -9,15 +9,16 @@ namespace OrderService.Domain.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> Create(User user);
+        void Create(User user);
 
-        Task Update(User user);
+        void Update(User user);
 
-        Task<ICollection<User>> GetAll();
+        Task<IEnumerable<User>> GetAll();
 
-        Task Delete(User user);
+        void Delete(User user);
 
         Task Commit();
-        Task<User> GetUserByEmail(string email);
+
+        Task<User> GetById(Guid id);
     }
 }

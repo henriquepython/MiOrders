@@ -23,7 +23,9 @@ namespace OrderService.Domain.Services
             user.created = DateTime.Now;
             user.roles = UserRoles.USER;
 
-            return await userRepository.Create(user);
+            userRepository.Create(user);
+            await userRepository.Commit();
+            return user;
         }
 
         public async Task<User> AdminCreateUser(User user)
@@ -32,17 +34,20 @@ namespace OrderService.Domain.Services
             user.created = DateTime.Now;
             user.roles = UserRoles.ADMIN;
 
-            return await userRepository.Create(user);
+            userRepository.Create(user);
+            await userRepository.Commit();
+            return user;
         }
 
-        public async Task<ICollection<User>> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
             return await userRepository.GetAll();
         }
 
-        public async Task<User> GetUserByEmail(string email)
+
+        public async Task<User> GetById(Guid id)
         {
-            return await userRepository.GetUserByEmail(email);
+            return await userRepository.GetById(id);
         }
     }
 }

@@ -21,34 +21,34 @@ namespace OrderService.Service.API.Controllers
             this.mapper = mapper;
         }
 
-        //GET ALL
-
         [HttpGet]
-        public async Task<ActionResult<ICollection<User>>> Get()
+        public async Task<ActionResult<IEnumerable<CreateUserViewModel>>> Get()
         {
-            return Ok(await userService.GetAllUsers());
+            var users = mapper.Map<IEnumerable<User>>(await userService.GetAllUsers());
+            return Ok(users);
         }
 
-        //GET BY EMAIL
-
-        [HttpGet("{email}")]
-        public async Task<ActionResult<User>> GetByEmail(string email)
+        [HttpGet("{id}", Name ="GetUser")]
+        public async Task<ActionResult<CreateUserViewModel>> GetById(Guid id)
         {
-            return Ok(await userService.GetUserByEmail(email));
+            var users = mapper.Map<User>(await userService.GetById(id));
+            return Ok(users);
         }
-
-        //POST
 
         [HttpPost]
-        public async Task<ActionResult<CreateUserViewModel>> Post([FromBody] CreateUserViewModel user)
+        public async Task<ActionResult<CreateUserViewModel>> Post([FromBody]CreateUserViewModel user)
         {
-            return Ok(await userService.CreateUser(mapper.Map<User>(user)));
+            var users = mapper.Map<User>(user);
+            var userById = await userService.CreateUser(users);
+            return new CreatedAtRouteResult("GetUser", new {id = users.id}, userById);
         }
 
         [HttpPost("/Admin")]
         public async Task<ActionResult<CreateUserViewModel>> AdminPost([FromBody] CreateUserViewModel user)
         {
-            return Ok(await userService.AdminCreateUser(mapper.Map<User>(user)));
+            var users = mapper.Map<User>(user);
+            var userById = await userService.AdminCreateUser(users);
+            return new CreatedAtRouteResult("GetUser", new { id = users.id }, userById);
         }
 
     }
